@@ -7,23 +7,33 @@ namespace WebApplication1.Controllers
     [Route("[controller]")]
     public class ProdutoController : ControllerBase
     {
-        [HttpGet]
-       public IActionResult Get()
+        [HttpGet("{codigo")]
+       public IActionResult Get(int codigo)
         {
             return Ok();
         }
+
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return Ok();
+        }
+
         [HttpPost]
         public IActionResult Post(NovoProdutoViewModel novoProdutoViewModel)
         {
             return Ok();
+
         }
+
         [HttpPut("{codigo}")]
         public IActionResult Put(int codigo,[FromBody] EditaProdutoViewModel editaProdutoViewModel)
         {
             return Ok();
         }
-        [HttpDelete]
-        public IActionResult Delete()
+
+        [HttpDelete("{codigo}")]
+        public IActionResult Delete(int codigo)
         {
             return Ok();
         }
