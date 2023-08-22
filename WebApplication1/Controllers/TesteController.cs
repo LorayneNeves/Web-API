@@ -5,16 +5,30 @@ namespace WebApplication1.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class TesteController : Controller
+    public class TesteController : PrincipalController
     {
         [HttpGet]
-        public IActionResult Post(AlunoViewModel alunoViewModel)
+        public IActionResult Get()
         {
-            if(alunoViewModel.Idade < 0)
+            return Ok("Olá mundo, minha primeira requisição GET");
+        }
+
+        [HttpGet("ObterPorId/{id}")]
+        public IActionResult Get(int id)
+        {
+            return Ok($"Olá mundo,exemplo rota com id = {id}");
+
+        }
+
+        [HttpPost]
+        public IActionResult Post(TesteViewModel testeViewModel)
+        {
+            if (!ModelState.IsValid)
             {
-                return BadRequest("Idade invalida");
+                return ApiBadRequestResponse(ModelState);
+
             }
-           return Ok("Aluno criado com sucesso");
+            return ApiResponse(testeViewModel, "Registro criado com sucesso!");
         }
     }
 }

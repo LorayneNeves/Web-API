@@ -2,12 +2,13 @@
 
 namespace WebApplication1.Models.Request
 {
-    public class AlunoViewModel
+    public class TesteViewModel
     {
         public string Nome { get; set; }
         public int Idade { get; set; }
 
-        [CpfValidation]
-        public string cpf { get; set; }
-    }
+        [CpfValidation(ErrorMessage = "CPF inválido.")]
+        public string Cpf { get; set; }
+     }
 }
+

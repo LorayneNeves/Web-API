@@ -99,15 +99,42 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPut("{codigo}")]
-        public IActionResult Put(int codigo,[FromBody] EditaProdutoViewModel editaProdutoViewModel)
+        public IActionResult Put(int codigo, [FromBody] EditaProdutoViewModel produto)
         {
-            return Ok();
+            if (produto == null)
+                return BadRequest();
+
+            List<ProdutoViewModel> produtos = LerProdutosDoArquivo();
+            int index = produtos.FindIndex(p => p.Codigo == codigo);
+            if (index == -1)
+                return NotFound();
+
+            ProdutoViewModel produtoEditado = new ProdutoViewModel()
+            {
+                Codigo = codigo,
+                Estoque = produto.Estoque,
+                Descricao = produto.Descricao,
+                Preco = produto.Preco
+            };
+
+            produtos[index] = produtoEditado;
+            EscreverProdutosNoArquivo(produtos);
+
+            return NoContent();
         }
 
         [HttpDelete("{codigo}")]
         public IActionResult Delete(int codigo)
         {
-            return Ok();
+            List<ProdutoViewModel> produtos = LerProdutosDoArquivo();
+            ProdutoViewModel produto = produtos.Find(p => p.Codigo == codigo);
+            if (produto == null)
+                return NotFound();
+
+            produtos.Remove(produto);
+            EscreverProdutosNoArquivo(produtos);
+
+            return NoContent();
         }
         #endregion
     }
