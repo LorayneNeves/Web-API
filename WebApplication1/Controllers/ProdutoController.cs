@@ -7,7 +7,7 @@ namespace WebApplication1.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ProdutoController : ControllerBase
+    public class ProdutoController : PrincipalController
     {
         private readonly string _produtoCaminhoArquivo;
 
@@ -75,6 +75,11 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public IActionResult Post(NovoProdutoViewModel novoProdutoViewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return ApiBadRequestResponse(ModelState, "dados invalidos");
+            }
+
             if (novoProdutoViewModel == null)
             {
                 return BadRequest();
@@ -94,7 +99,8 @@ namespace WebApplication1.Controllers
             produtos.Add(novoProduto);
             EscreverProdutosNoArquivo(produtos);
 
-            return CreatedAtAction(nameof(Get), new { codigo = novoProduto.Codigo }, novoProduto);
+            return ApiResponse(novoProduto , "Produto cadastrado com sucesso.");
+            //return CreatedAtAction(nameof(Get), new { codigo = novoProduto.Codigo }, novoProduto);
 
         }
 
