@@ -1,3 +1,9 @@
+using Application.AutoMapper;
+using Application.Interfaces;
+using Application.Services;
+using Data.Repository;
+using Domain.Interface;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,11 +13,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddControllers()
-        .ConfigureApiBehaviorOptions(options =>
-        {
-            options.SuppressModelStateInvalidFilter = true;
-        });
+builder.Services.AddAutoMapper(typeof(DomainToApplication), typeof(ApplicationToDomain));
+
+builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
+builder.Services.AddScoped<IProdutoService, ProdutoService>();
+
 
 var app = builder.Build();
 
