@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Entities;
 
 namespace Application.AutoMapper
 {
@@ -14,6 +15,8 @@ namespace Application.AutoMapper
         public DomainToApplication()
         {
             CreateMap<Produto, ProdutoViewModel>();
+            CreateMap<Categoria, CategoriaViewModel>();
+            CreateMap<Fornecedor, FornecedorViewModel>();
         }
     }
 }

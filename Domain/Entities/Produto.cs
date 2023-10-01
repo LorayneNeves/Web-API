@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,26 +12,14 @@ namespace Domain
     {
 
         #region 1 - Contrutores
-        public Produto(string nome, string descricao, bool ativo, decimal valor, DateTime dataCadastro, string imagem, int quantidadeEstoque)
-        {
-            Nome = nome;
-            Descricao = descricao;
-            Ativo = ativo;
-            Valor = valor;
-            DataCadastro = dataCadastro;
-            Imagem = imagem;
-            QuantidadeEstoque = quantidadeEstoque;
-        }
-
-
-        public Produto(int codigo, string nome, string descricao, bool ativo, decimal valor, DateTime dataCadastro, string imagem, int quantidadeEstoque)
+        public Produto(int codigo, string nome, string descricao, bool ativo, decimal valor, DateTime data, string imagem, int quantidadeEstoque)
         {
             Codigo = codigo;
             Nome = nome;
             Descricao = descricao;
             Ativo = ativo;
             Valor = valor;
-            DataCadastro = dataCadastro;
+            Data = data;
             Imagem = imagem;
             QuantidadeEstoque = quantidadeEstoque;
         }
@@ -42,7 +31,7 @@ namespace Domain
         public string Descricao { get; private set; }
         public bool Ativo { get; private set; }
         public decimal Valor { get; private set; }
-        public DateTime DataCadastro { get; private set; }
+        public DateTime Data { get; private set; }
         public string Imagem { get; private set; }
         public int QuantidadeEstoque { get; private set; }
 

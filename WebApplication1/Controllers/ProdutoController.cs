@@ -22,5 +22,10 @@ namespace WebApplication1.Controllers
 
             return Ok();
         }
+        [HttpGet(Name = "ObterTodos")]
+        public IActionResult Get()
+        {
+            return Ok(_produtoService.ObterTodos());
+        }
     }
 }
