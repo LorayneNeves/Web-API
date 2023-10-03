@@ -14,8 +14,8 @@ namespace Application.Interfaces
         Task<Categoria> ObterPorId(Guid id);
         Task<IEnumerable<Categoria>> ObterPorCategoria(int codigo);
 
-        void Adicionar(NovaCategoriaViewModel categoria);
-        void Atualizar(CategoriaViewModel categoria);
-        void Remover(CategoriaViewModel categoria);
+        void AdicionarCategoria(NovaCategoriaViewModel categoria);
+        void AtualizarCategoria(CategoriaViewModel categoria);
+        void RemoverCategoria(CategoriaViewModel categoria);
     }
 }

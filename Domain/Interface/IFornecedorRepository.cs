@@ -9,6 +9,8 @@ namespace Domain.Interface
 {
     public interface IFornecedorRepository
     {
+        public void Remover(Fornecedor fornecedor);
+        public void Atualizar(Fornecedor fornecedor);
         public void Adicionar(Fornecedor novoFornecedor);
         public Fornecedor BuscarPorId(int codigo);
 

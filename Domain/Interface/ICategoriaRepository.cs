@@ -13,8 +13,8 @@ namespace Domain.Interface
         Task<Categoria> ObterPorId(Guid id);
         Task<IEnumerable<Categoria>> ObterPorCategoria(int codigo);
 
-        void Adicionar(Categoria categoria);
-        void Atualizar(Categoria categoria);
-        void Remover(Categoria categoria);
+        public void AdicionarCategoria(Categoria categoria);
+        public void AtualizarCategoria(Categoria categoria);
+        public void RemoverCategoria(int codigo, List<Categoria> categoria);
     }
 }

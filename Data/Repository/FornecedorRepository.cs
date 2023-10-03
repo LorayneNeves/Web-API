@@ -82,6 +82,25 @@ namespace Data.Repository
             string json = JsonConvert.SerializeObject(fornecedores);
             System.IO.File.WriteAllText(_fornecedorCaminhoArquivo, json);
         }
+
+        public void Remover(int codigo)
+        {
+            List<Fornecedor> fornecedor = LerFornecedoresDoArquivo();
+            var fornecedorExistente = fornecedor.FirstOrDefault(p => p.Codigo == codigo);
+
+            fornecedor.Remove(fornecedorExistente);
+            EscreverFornecedorNoArquivo(fornecedor);
+        }
+
+        public void Atualizar(Fornecedor fornecedor)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Remover(Fornecedor fornecedor)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
 
     }

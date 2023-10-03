@@ -26,23 +26,23 @@ namespace Application.Services
         }
 #endregion
 #region - Funções
-        public void Adicionar(NovaCategoriaViewModel novaCategoriaViewModel)
+        public void AdicionarCategoria(NovaCategoriaViewModel novaCategoriaViewModel)
         {
             var novaCategoria = _mapper.Map<Categoria>(novaCategoriaViewModel);
-            _categoriaRepository.Adicionar(novaCategoria);
+            _categoriaRepository.AdicionarCategoria(novaCategoria);
         }
 
-        public void Adicionar(Categoria categoria)
+        public void AdicionarCategoria(Categoria categoria)
         {
             throw new NotImplementedException();
         }
 
-        public void Atualizar(Categoria categoria)
+        public void AtualizarCategoria(Categoria categoria)
         {
            
         }
 
-        public void Atualizar(CategoriaViewModel categoria)
+        public void AtualizarCategoria(CategoriaViewModel categoria)
         {
             throw new NotImplementedException();
         }
@@ -68,6 +68,11 @@ namespace Application.Services
         }
 
         public void Remover(CategoriaViewModel categoria)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoverCategoria(CategoriaViewModel categoria)
         {
             throw new NotImplementedException();
         }

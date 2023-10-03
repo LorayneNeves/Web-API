@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces;
 using Application.Services;
+using Application.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApplication1.Controllers
@@ -15,10 +16,10 @@ namespace WebApplication1.Controllers
             _categoriaService = categoriaService;
         }
 
-        [HttpPost(Name = "Adicionar")]
+        [HttpPost(Name = "AdicionarCategoria")]
         public IActionResult Post(Application.ViewModels.NovaCategoriaViewModel novaCategoriaViewModel)
         {
-            _categoriaService.Adicionar(novaCategoriaViewModel);
+            _categoriaService.AdicionarCategoria(novaCategoriaViewModel);
 
             return Ok();
         }
@@ -28,9 +29,10 @@ namespace WebApplication1.Controllers
             return Ok(_categoriaService.ObterTodos());
         }
 
-        [HttpDelete(Name = "Remover")]
-        public IActionResult Delete()
+        [HttpDelete(Name = "RemoverCategoria")]
+        public IActionResult Delete(CategoriaViewModel categoriaViewModel)
         {
+            _categoriaService.RemoverCategoria(categoriaViewModel);
             return Ok(_categoriaService.ObterTodos());
         }
     }

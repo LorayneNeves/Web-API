@@ -23,7 +23,7 @@ namespace Data.Repository
         #endregion
 
         #region - Funções
-        public void Adicionar(Categoria categoria)
+        public void AdicionarCategoria(Categoria categoria)
         {
             var categorias = LerCategoriasDoArquivo();
             int proximoCodigo = ObterProximoCodigoDisponivel();
@@ -32,7 +32,7 @@ namespace Data.Repository
             EscreverCategoriaNoArquivo(categorias);
         }
 
-        public void Atualizar(Categoria categoria, int codigo)
+        public void AtualizarCategoria(Categoria categoria, int codigo)
         {         
             List<Categoria> listaCategoria = LerCategoriasDoArquivo();
             var categoriaExistente = listaCategoria.FirstOrDefault(p => p.Codigo == codigo);
@@ -54,9 +54,9 @@ namespace Data.Repository
             throw new NotImplementedException();
         }
 
-        public void Remover(int codigo)
+        public void RemoverCategoria(int codigo, List<Categoria> categoria)
         {
-            List<Categoria> categoria = LerCategoriasDoArquivo();
+            categoria = LerCategoriasDoArquivo();
             var categoriaExistente = categoria.FirstOrDefault(p => p.Codigo == codigo);
             
             categoria.Remove(categoriaExistente);
@@ -88,15 +88,12 @@ namespace Data.Repository
             System.IO.File.WriteAllText(_categoriaCaminhoArquivo, json);
         }
 
-        public void Atualizar(Categoria categoria)
+
+        public void AtualizarCategoria(Categoria categoria)
         {
             throw new NotImplementedException();
         }
 
-        public void Remover(Categoria categoria)
-        {
-            throw new NotImplementedException();
-        }
         #endregion
     }
 }
