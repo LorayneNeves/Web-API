@@ -1,0 +1,45 @@
+Questão 1:
+Em sala no início da disciplina criamos e comentamos que nossa API estava com muitas
+responsabilidades( regras de negócio , validações, persistência) , ferindo assim qual princípio?
+Descreva o princípio e o que a partir de então começamos a fazer para corrigir isso?
+
+Resposta:
+Fere o princípio de responsabilidade única (SRP - Single Responsibility Principle) do SOLID. O SRP é um dos cinco princípios de design de software que visam facilitar a manutenção, extensibilidade e reutilização do código, tornando-o mais organizado e de fácil compreensão.
+
+O Princípio de Responsabilidade Única (SRP) afirma que uma classe deve ter apenas uma razão para mudar. Isso significa que uma classe deve ter uma única responsabilidade ou tarefa bem definida. Quando uma classe tem várias responsabilidades, ela se torna mais difícil de manter, testar e evoluir.
+
+Para corrigir esse problema e aderir ao SRP, nós dividimos as responsabilidades em diferentes camadas ou classes especializadas. Separamos a logica de negocio das camadas de persistencia e apresentação. Usamos também a injeção de dependencia.
+
+-------------------
+
+Questão 2:
+Começamos a dividir nosso projeto em camadas , são elas:
+Domain, Data, Applicaion e API. Descreva qual o papel de cada uma delas.
+
+Resposta:
+Domain: Essa camada contém entidades de domínio, objetos de valor, regras de negócios e qualquer lógica de domínio relacionada
+
+Data: Esta camada trata da persistência de dados e interage com o banco de dados ou qualquer outro mecanismo de armazenamento de dados. Ela contém os modelos de dados, repositórios e toda a lógica relacionada ao acesso a dados.
+
+Application: Essa camada contém a lógica de aplicação, serviços de aplicação, validações e mapeamento de dados entre a camada de API e a camada de domínio. É onde as regras de negócios são aplicadas e onde a interação com o domínio e os dados ocorre.
+
+API: Esta camada fornece uma interface para interações externas com seu aplicativo, como aplicativos da web. É onde os endpoints da API são definidos e onde a interação com os clientes ocorre.
+
+------------------------
+
+Questão 3:
+Na camada de Domain criamos classes cujas propriedades são com set privado. Descreva,
+vantagem de usar dessa forma destacando como fizemos em sala com o produto.
+
+Resposta:
+Definimos as propriedades como somente leitura (com set privado), encapsulamos o estado interno do objeto Produto. Isso significa que os detalhes internos do objeto foram ocultos e só poderiam ser modificados por meio de métodos específicos da classe. Com set privado garantimos que os dados dentro do Produto não fossem alterados de maneira incorreta.
+
+---------------------
+
+Questão 4:
+Na camada de applicattion na classe service (de serviço) fizemos o que chamamos de injeção
+de dependência, descreva por que utilizamos essa técnica e como isso pode ser uma
+vantagem?
+
+Resposta:
+A injeção de dependência ajuda a desacoplar as classes e componentes do seu sistema. Isso significa que uma classe de serviço não precisa saber como criar suas dependências ou onde elas vêm. Em vez disso, as dependências são fornecidas a ela. Alem disso, pode reutilizar facilmente componentes e serviços em diferentes partes do aplicativo, pois eles podem ser injetados onde necessário.
