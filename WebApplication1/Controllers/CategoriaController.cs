@@ -29,11 +29,5 @@ namespace WebApplication1.Controllers
             return Ok(_categoriaService.ObterTodos());
         }
 
-        [HttpDelete(Name = "RemoverCategoria")]
-        public IActionResult Delete(CategoriaViewModel categoriaViewModel)
-        {
-            _categoriaService.RemoverCategoria(categoriaViewModel);
-            return Ok(_categoriaService.ObterTodos());
-        }
     }
 }

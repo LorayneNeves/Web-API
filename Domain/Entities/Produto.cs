@@ -8,32 +8,46 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    public class Produto
+    public class Produto : EntidadeBase
     {
 
         #region 1 - Contrutores
-        public Produto(int codigo, string nome, string descricao, bool ativo, decimal valor, DateTime data, string imagem, int quantidadeEstoque)
+
+        public Produto(string nome, string descricao, bool ativo, decimal valor, DateTime dataCadastro, string imagem, int quantidadeEstoque)
         {
-            Codigo = codigo;
             Nome = nome;
             Descricao = descricao;
             Ativo = ativo;
             Valor = valor;
-            Data = data;
+            DataCadastro = dataCadastro;
             Imagem = imagem;
             QuantidadeEstoque = quantidadeEstoque;
         }
+
+        public Produto(Guid codigoId, string nome, string descricao, bool ativo, decimal valor, DateTime dataCadastro, string imagem, int quantidadeEstoque)
+        {
+            CodigoId = codigoId;
+            Nome = nome;
+            Descricao = descricao;
+            Ativo = ativo;
+            Valor = valor;
+            DataCadastro = dataCadastro;
+            Imagem = imagem;
+            QuantidadeEstoque = quantidadeEstoque;
+        }
+
+
         #endregion
 
         #region 2 - Propriedades
-        public int Codigo { get; private set; }
         public string Nome { get; private set; }
         public string Descricao { get; private set; }
         public bool Ativo { get; private set; }
         public decimal Valor { get; private set; }
-        public DateTime Data { get; private set; }
+        public DateTime DataCadastro { get; private set; }
         public string Imagem { get; private set; }
         public int QuantidadeEstoque { get; private set; }
+        public Guid CategoriaID { get; private set; }
 
         #endregion
 
@@ -43,14 +57,11 @@ namespace Domain
 
         public void Desativar() => Ativo = false;
 
-        public void AlterarDescricao(string descricao)
-        {
-            Descricao = descricao;
-        }
+        public void AlterarDescricao(string descricao) => Descricao = descricao;
+        public void AlterarCategoria(Guid categoriaID) => CategoriaID = categoriaID;
 
         public void DebitarEstoque(int quantidade)
         {
-            if (quantidade < 0) quantidade *= -1;
             if (!PossuiEstoque(quantidade)) throw new Exception("Estoque insuficiente");
             QuantidadeEstoque -= quantidade;
         }
@@ -61,7 +72,6 @@ namespace Domain
         }
 
         public bool PossuiEstoque(int quantidade) => QuantidadeEstoque >= quantidade;
-
 
         #endregion
     }

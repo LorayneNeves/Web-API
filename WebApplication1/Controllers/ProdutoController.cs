@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces;
+using Application.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -26,6 +27,15 @@ namespace WebApplication1.Controllers
         public IActionResult Get()
         {
             return Ok(_produtoService.ObterTodos());
+        }
+
+        [HttpPut]
+        [Route("Desativar/{id}")]
+        public async Task<IActionResult> Put(Guid id)
+        {
+            await _produtoService.Desativar(id);
+
+            return Ok("Produto desativado com sucesso");
         }
     }
 }

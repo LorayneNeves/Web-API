@@ -10,12 +10,10 @@ namespace Application.Interfaces
 {
     public interface ICategoriaService
     {
-        IEnumerable<Categoria> ObterTodos();
-        Task<Categoria> ObterPorId(Guid id);
-        Task<IEnumerable<Categoria>> ObterPorCategoria(int codigo);
+        IEnumerable<CategoriaViewModel> ObterTodas();
+        Task<CategoriaViewModel> ObterPorId(Guid id);
 
-        void AdicionarCategoria(NovaCategoriaViewModel categoria);
-        void AtualizarCategoria(CategoriaViewModel categoria);
-        void RemoverCategoria(CategoriaViewModel categoria);
+        Task Adicionar(NovaCategoriaViewModel categoriaViewModel);
+        void Atualizar(NovaCategoriaViewModel categoriaViewModel);
     }
 }

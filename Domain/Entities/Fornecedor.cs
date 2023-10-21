@@ -9,32 +9,41 @@ using System.Threading.Tasks;
 namespace Domain.Entities
 {
     public class Fornecedor
-    { 
-        #region 1 - Contrutores
-        public Fornecedor(int codigo, string razaoSocial, string cnpj, bool ativo, DateTime data, string email)
+    {
+        #region Construtor
+
+        public Fornecedor(string nome, string cnpj, string razaoSocial, DateTime dataCadastro, bool ativo)
         {
-            Codigo = codigo;
-            RazaoSocial = razaoSocial;
+            Nome = nome;
             Cnpj = cnpj;
+            RazaoSocial = razaoSocial;
+            DataCadastro = dataCadastro;
             Ativo = ativo;
-            Data = data;
-            Email = email;
         }
- #endregion
-        #region 2 - Propriedades
-        public int Codigo { get;private set; }
-        public string RazaoSocial { get; private set; }
-        public string Cnpj { get; private set; }
-        public bool Ativo { get; private set; }
-        public DateTime Data { get; private set; }
-        public string Email { get; private set; }
+
         #endregion
 
-        #region 3 - Comportamentos
+        #region propriedades
 
-        public void SetaCodigoProduto(int novocodigo) => Codigo = novocodigo;
+        public string Nome { get; private set; }
+        public string Cnpj { get; private set; }
+        public string RazaoSocial { get; private set; }
+        public DateTime DataCadastro { get; private set; }
+        public bool Ativo { get; private set; }
+
+
+        #endregion
+
+        #region comportamentos
+
         public void Ativar() => Ativo = true;
+
         public void Desativar() => Ativo = false;
+
+        public void AlterarNome(string nome) => Nome = nome;
+        public void AlterarRazaoSocial(string razaoSocial) => RazaoSocial = razaoSocial;
+        public void AlterarCNPJ(string cnpj) => Cnpj = cnpj;
+
 
         #endregion
     }

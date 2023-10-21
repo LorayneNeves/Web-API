@@ -6,22 +6,35 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class Categoria
+    public class Categoria : EntidadeBase
     {
-        public Categoria(int codigo, string descricao)
+        #region construtor
+        public Categoria(string descricao, bool ativo)
         {
-            Codigo = codigo;
             Descricao = descricao;
+            Ativo = ativo;
         }
 
-        #region 2 - Propriedades
-
-        public int Codigo { get; private set; }
-        public string Descricao { get; private set; }
+        public Categoria(Guid codigoId, string descricao, bool ativo)
+        {
+            CodigoId = codigoId;
+            Descricao = descricao;
+            Ativo = ativo;
+        }
         #endregion
-        #region 3 - Comportamentos
+
+        #region propriedades
+        public string Descricao { get; private set; }
+        public bool Ativo { get; private set; }
+        #endregion
+
+        #region comportamentos
+
         public void AlterarDescricao(string descricao) => Descricao = descricao;
-        public void SetaCodigoProduto(int novocodigo) => Codigo = novocodigo;
+        public void Ativar() => Ativo = true;
+
+        public void Desativar() => Ativo = false;
+
         #endregion
     }
 }

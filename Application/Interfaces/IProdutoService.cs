@@ -9,12 +9,12 @@ namespace Application.Interfaces
 {
     public interface IProdutoService
     {
-        Task<IEnumerable<ProdutoViewModel>> ObterTodos();
+        IEnumerable<ProdutoViewModel> ObterTodos();
         Task<ProdutoViewModel> ObterPorId(Guid id);
         Task<IEnumerable<ProdutoViewModel>> ObterPorCategoria(int codigo);
 
-        void Adicionar(NovoProdutoViewModel produto);
+        Task Adicionar(NovoProdutoViewModel produto);
         void Atualizar(ProdutoViewModel produto);
-
+        Task Desativar(Guid id);
     }
 }

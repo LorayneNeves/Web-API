@@ -8,11 +8,12 @@ namespace Domain.Interface
 {
     public interface IProdutoRepository
     {
-        public void Adicionar(Produto novoProduto);
-        public Produto BuscarPorId(int codigo);
+        IEnumerable<Produto> ObterTodos();
+        Task<Produto> ObterPorId(Guid id);
+        Task<IEnumerable<Produto>> ObterPorCategoria(int codigo);
 
-        public IEnumerable<Produto> BuscarTodos();
-        public IEnumerable<Produto> BuscarTodosAtivos();
-        public IEnumerable<Produto> BuscarTodosInativos();
+        Task Adicionar(Produto produto);
+        Task Desativar(Produto produto);
+        void Atualizar(Produto produto);
     }
 }
