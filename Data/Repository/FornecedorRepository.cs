@@ -1,4 +1,7 @@
-﻿using Domain;
+﻿using AutoMapper;
+using Data.Providers.MongoDb.Collections;
+using Data.Providers.MongoDb.Interfaces;
+using Domain;
 using Domain.Entities;
 using Domain.Interface;
 using Newtonsoft.Json;
@@ -12,96 +15,50 @@ namespace Data.Repository
 {
     public class FornecedorRepository : IFornecedorRepository
     {
-        #region - Construtor
-        private readonly string _fornecedorCaminhoArquivo;
 
-        public FornecedorRepository()
+        private readonly IMongoRepository<FornecedorCollection> _fornecedorRepository;
+        private readonly IMapper _mapper;
+
+        public FornecedorRepository(IMongoRepository<FornecedorCollection> fornecedorRepository,
+            IMapper mapper
+            )
         {
-            _fornecedorCaminhoArquivo = Path.Combine(Directory.GetCurrentDirectory(),
-                "FileJsonData", "fornecedor.json");
+            _fornecedorRepository = fornecedorRepository;
+            _mapper = mapper;
         }
 
-        #endregion
-        #region - Funções do repositorio
-        public void Adicionar(Fornecedor novoFornecedor)
+        public async Task Adicionar(Fornecedor fornecedor)
         {
-            List<Fornecedor> fornecedores = new List<Fornecedor>();
-            int proximoCodigo = ObterProximoCodigoDisponivel();
-            fornecedores.Add(novoFornecedor);
-            EscreverFornecedorNoArquivo(fornecedores);
+            var novoFornecedorCollection = _mapper.Map<FornecedorCollection>(fornecedor);
+            await _fornecedorRepository.InsertOneAsync(novoFornecedorCollection);
         }
 
-        public Fornecedor BuscarPorId(int codigo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Fornecedor> BuscarTodos()
+        public Task Atualizar(Fornecedor fornecedor)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Fornecedor> BuscarTodosAtivos()
+        public Task<Fornecedor> ObterPorCnpj(string cnpj)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Fornecedor> BuscarTodosInativos()
-        {
-            throw new NotImplementedException();
-        }
-        #endregion
-        #region Funções do arquivo
-
-        private List<Fornecedor> LerFornecedoresDoArquivo()
-        {
-            if (!System.IO.File.Exists(_fornecedorCaminhoArquivo))
-            {
-                return new List<Fornecedor>();
-            }
-
-            string json = System.IO.File.ReadAllText(_fornecedorCaminhoArquivo);
-            return JsonConvert.DeserializeObject<List<Fornecedor>>(json);
-        }
-
-        private int ObterProximoCodigoDisponivel()
-        {
-            List<Fornecedor> fornecedor = LerFornecedoresDoArquivo();
-            if (fornecedor.Any())
-            {
-                return fornecedor.Max(p => p.Codigo) + 1;
-            }
-            else
-            {
-                return 1;
-            }
-        }
-
-        private void EscreverFornecedorNoArquivo(List<Fornecedor> fornecedores)
-        {
-            string json = JsonConvert.SerializeObject(fornecedores);
-            System.IO.File.WriteAllText(_fornecedorCaminhoArquivo, json);
-        }
-
-        public void Remover(int codigo)
-        {
-            List<Fornecedor> fornecedor = LerFornecedoresDoArquivo();
-            var fornecedorExistente = fornecedor.FirstOrDefault(p => p.Codigo == codigo);
-
-            fornecedor.Remove(fornecedorExistente);
-            EscreverFornecedorNoArquivo(fornecedor);
-        }
-
-        public void Atualizar(Fornecedor fornecedor)
+        public Task<Fornecedor> ObterPorId(int id)
         {
             throw new NotImplementedException();
         }
 
-        public void Remover(Fornecedor fornecedor)
+        public async Task<IEnumerable<Fornecedor>> ObterTodos()
+        {
+            var listaDeFornecedores = _fornecedorRepository.FilterBy(filtro => true);
+
+            return _mapper.Map<IEnumerable<Fornecedor>>(listaDeFornecedores);
+
+        }
+
+        public Task Remover(Fornecedor fornecedor)
         {
             throw new NotImplementedException();
         }
-        #endregion
-
     }
 }

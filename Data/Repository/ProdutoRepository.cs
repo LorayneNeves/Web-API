@@ -1,4 +1,7 @@
 ﻿
+using AutoMapper;
+using Data.Providers.MongoDb.Collections;
+using Data.Providers.MongoDb.Interfaces;
 using Domain;
 using Domain.Interface;
 using Newtonsoft.Json;
@@ -12,78 +15,65 @@ namespace Data.Repository
 {
     public class ProdutoRepository : IProdutoRepository
     {
-        #region - Construtor
-        private readonly string _produtoCaminhoArquivo;
+        private readonly IMongoRepository<ProdutoCollection> _produtoRepository;
+        private readonly IMapper _mapper;
 
-        public ProdutoRepository()
+        #region - Construtores
+        public ProdutoRepository(IMongoRepository<ProdutoCollection> produtoRepository, IMapper mapper)
         {
-            _produtoCaminhoArquivo = Path.Combine(Directory.GetCurrentDirectory(),
-                "FileJsonData", "produto.json");
-        }
-
-        #endregion
-
-        #region - Funções do repositorio
-        public void Adicionar(Produto novoProduto)
-        {
-            List<Produto> produtos = new List<Produto>();
-            int proximoCodigo = ObterProximoCodigoDisponivel();
-            produtos.Add(novoProduto);
-            EscreverProdutosNoArquivo(produtos);
-        }
-
-        public Produto BuscarPorId(int codigo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Produto> BuscarTodos()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Produto> BuscarTodosAtivos()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Produto> BuscarTodosInativos()
-        {
-            throw new NotImplementedException();
+            _produtoRepository = produtoRepository;
+            _mapper = mapper;
         }
         #endregion
-
-        #region Funções do arquivo
-        private List<Produto> LerProdutosDoArquivo()
+        #region - Funções
+        public async Task Adicionar(Produto produto)
         {
-            if (!System.IO.File.Exists(_produtoCaminhoArquivo))
-            {
-                return new List<Produto>();
-            }
-
-            string json = System.IO.File.ReadAllText(_produtoCaminhoArquivo);
-            return JsonConvert.DeserializeObject<List<Produto>>(json);
+            await _produtoRepository.InsertOneAsync(_mapper.Map<ProdutoCollection>(produto));
         }
 
-        private int ObterProximoCodigoDisponivel()
+        public void Atualizar(Produto produto)
         {
-            List<Produto> produtos = LerProdutosDoArquivo();
-            if (produtos.Any())
-            {
-                return produtos.Max(p => p.Codigo) + 1;
-            }
-            else
-            {
-                return 1;
-            }
+            throw new NotImplementedException();
         }
 
-        private void EscreverProdutosNoArquivo(List<Produto> produtos)
+        public async Task Desativar(Produto produto)
         {
-            string json = JsonConvert.SerializeObject(produtos);
-            System.IO.File.WriteAllText(_produtoCaminhoArquivo, json);
+
+            var buscaProduto = _produtoRepository.FilterBy(filter => filter.CodigoId == produto.CodigoId);
+
+            if (buscaProduto == null) throw new ApplicationException("Não é possível desativar um produto que não existe");
+
+            var produtoCollection = _mapper.Map<ProdutoCollection>(produto);
+
+            produtoCollection.Id = buscaProduto.FirstOrDefault().Id;
+
+            await _produtoRepository.ReplaceOneAsync(produtoCollection);
         }
 
+        public Task<IEnumerable<Produto>> ObterPorCategoria(int codigo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<Produto> ObterPorId(Guid id)
+        {
+
+            var buscaProduto = _produtoRepository.FilterBy(filter => filter.CodigoId == id);
+
+            var produto = _mapper.Map<Produto>(buscaProduto.FirstOrDefault());
+
+            return produto;
+        }
+
+        public IEnumerable<Produto> ObterTodos()
+        {
+            var produtoList = _produtoRepository.FilterBy(filter => true);
+
+            return _mapper.Map<IEnumerable<Produto>>(produtoList);
+
+        }
         #endregion
+
     }
+
 }

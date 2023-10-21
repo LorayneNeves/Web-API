@@ -24,63 +24,33 @@ namespace Application.Services
             _categoriaRepository = categoriaRepository;
             _mapper = mapper;
         }
-#endregion
-#region - Funções
-        public void AdicionarCategoria(NovaCategoriaViewModel novaCategoriaViewModel)
-        {
-            var novaCategoria = _mapper.Map<Categoria>(novaCategoriaViewModel);
-            _categoriaRepository.AdicionarCategoria(novaCategoria);
-        }
-
-        public void AdicionarCategoria(Categoria categoria)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AtualizarCategoria(Categoria categoria)
-        {
-           
-        }
-
-        public void AtualizarCategoria(CategoriaViewModel categoria)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<Categoria>> ObterPorCategoria(int codigo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Categoria> ObterPorId(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<CategoriaViewModel> ObterTodos()
-        {
-            return _mapper.Map<IEnumerable<CategoriaViewModel>>(_categoriaRepository.ObterTodos());
-        }
-
-        public void Remover(Categoria categoria)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Remover(CategoriaViewModel categoria)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoverCategoria(CategoriaViewModel categoria)
-        {
-            throw new NotImplementedException();
-        }
-
-        IEnumerable<Categoria> ICategoriaService.ObterTodos()
-        {
-            throw new NotImplementedException();
-        }
         #endregion
+
+
+
+        public async Task Adicionar(NovaCategoriaViewModel categoriaViewModel)
+        {
+            var novaCategoria = _mapper.Map<Categoria>(categoriaViewModel);
+
+            Categoria categoria = new Categoria(categoriaViewModel.Descricao, categoriaViewModel.Ativo);
+
+            await _categoriaRepository.Adicionar(categoria);
+        }
+
+        public void Atualizar(NovaCategoriaViewModel categoriaViewModel)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<CategoriaViewModel> ObterPorId(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<CategoriaViewModel> ObterTodas()
+        {
+            return _mapper.Map<IEnumerable<CategoriaViewModel>>(_categoriaRepository.ObterTodas());
+
+        }
     }
 }

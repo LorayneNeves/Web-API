@@ -1,4 +1,7 @@
-﻿using Domain;
+﻿using AutoMapper;
+using Data.Providers.MongoDb.Collections;
+using Data.Providers.MongoDb.Interfaces;
+using Domain;
 using Domain.Entities;
 using Domain.Interface;
 using Newtonsoft.Json;
@@ -12,88 +15,45 @@ namespace Data.Repository
 {
     public class CategoriaRepository : ICategoriaRepository
     {
-        private readonly string _categoriaCaminhoArquivo;
+        private readonly IMongoRepository<CategoriaCollection> _categoriaRepository;
+        private readonly IMapper _mapper;
 
         #region - Construtores
-        public CategoriaRepository()
+        public CategoriaRepository(IMongoRepository<CategoriaCollection> categoriaRepository, IMapper mapper)
         {
-            _categoriaCaminhoArquivo = Path.Combine(Directory.GetCurrentDirectory(), "FileJsonData", "categoria.json");
-        }
-
-        #endregion
-
-        #region - Funções
-        public void AdicionarCategoria(Categoria categoria)
-        {
-            var categorias = LerCategoriasDoArquivo();
-            int proximoCodigo = ObterProximoCodigoDisponivel();
-            categoria.SetaCodigoProduto(proximoCodigo);
-            categorias.Add(categoria);
-            EscreverCategoriaNoArquivo(categorias);
-        }
-
-        public void AtualizarCategoria(Categoria categoria, int codigo)
-        {         
-            List<Categoria> listaCategoria = LerCategoriasDoArquivo();
-            var categoriaExistente = listaCategoria.FirstOrDefault(p => p.Codigo == codigo);
-            EscreverCategoriaNoArquivo(listaCategoria);
-        }
-
-        public Task<IEnumerable<Categoria>> ObterPorCategoria(int codigo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Categoria> ObterPorId(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Categoria> ObterTodos()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoverCategoria(int codigo, List<Categoria> categoria)
-        {
-            categoria = LerCategoriasDoArquivo();
-            var categoriaExistente = categoria.FirstOrDefault(p => p.Codigo == codigo);
-            
-            categoria.Remove(categoriaExistente);
-            EscreverCategoriaNoArquivo(categoria);
+            _categoriaRepository = categoriaRepository;
+            _mapper = mapper;
         }
         #endregion
 
-        #region - Métodos arquivo
-        private List<Categoria> LerCategoriasDoArquivo()
+        public async Task Adicionar(Categoria categoria)
         {
-            if (!System.IO.File.Exists(_categoriaCaminhoArquivo))
-                return new List<Categoria>();
-            string json = System.IO.File.ReadAllText(_categoriaCaminhoArquivo);
-            return JsonConvert.DeserializeObject<List<Categoria>>(json);
+            await _categoriaRepository.InsertOneAsync(_mapper.Map<CategoriaCollection>(categoria));
         }
 
-        private int ObterProximoCodigoDisponivel()
-        {
-            List<Categoria> categoria = LerCategoriasDoArquivo();
-            if (categoria.Any())
-                return categoria.Max(p => p.Codigo) + 1;
-            else
-                return 1;
-        }
-
-        private void EscreverCategoriaNoArquivo(List<Categoria> categoria)
-        {
-            string json = JsonConvert.SerializeObject(categoria);
-            System.IO.File.WriteAllText(_categoriaCaminhoArquivo, json);
-        }
-
-
-        public void AtualizarCategoria(Categoria categoria)
+        public void Atualizar(Categoria categoria)
         {
             throw new NotImplementedException();
         }
 
-        #endregion
+        public Task Desativar(Categoria categoria)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<Categoria> ObterPorId(Guid id)
+        {
+            var buscaCategoria = _categoriaRepository.FilterBy(filter => filter.CodigoId == id);
+
+            return _mapper.Map<Categoria>(buscaCategoria.FirstOrDefault());
+
+        }
+
+        public IEnumerable<Categoria> ObterTodas()
+        {
+            var categoriaList = _categoriaRepository.FilterBy(filter => true);
+
+            return _mapper.Map<IEnumerable<Categoria>>(categoriaList);
+        }
     }
 }

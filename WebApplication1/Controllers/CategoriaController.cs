@@ -10,24 +10,27 @@ namespace WebApplication1.Controllers
     public class CategoriaController : ControllerBase
     {
         private readonly ICategoriaService _categoriaService;
-
         public CategoriaController(ICategoriaService categoriaService)
         {
             _categoriaService = categoriaService;
         }
 
-        [HttpPost(Name = "AdicionarCategoria")]
-        public IActionResult Post(Application.ViewModels.NovaCategoriaViewModel novaCategoriaViewModel)
+        [HttpPost]
+        [Route("Adicionar")]
+        public async Task<IActionResult> Post(NovaCategoriaViewModel categoriaViewModel)
         {
-            _categoriaService.AdicionarCategoria(novaCategoriaViewModel);
+            await _categoriaService.Adicionar(categoriaViewModel);
 
             return Ok();
         }
-        [HttpGet(Name = "ObterTodos")]
+
+
+
+        [HttpGet]
+        [Route("ObterTodas")]
         public IActionResult Get()
         {
-            return Ok(_categoriaService.ObterTodos());
+            return Ok(_categoriaService.ObterTodas());
         }
-
     }
 }

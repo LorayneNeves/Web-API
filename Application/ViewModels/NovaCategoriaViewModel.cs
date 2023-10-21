@@ -8,7 +8,7 @@ namespace Application.ViewModels
 {
     public class NovaCategoriaViewModel
     {
-        public int Codigo { get; set; }
         public string Descricao { get; set; }
+        public bool Ativo { get; set; }
     }
 }
