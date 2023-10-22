@@ -28,7 +28,7 @@ namespace Data.Providers.MongoDb.Interfaces
 
         void InsertOne(TDocument document);
 
-        Task InsertOneAsync(TDocument document);
+        Task InsertOneAsync(TDocument document); 
 
         void InsertMany(ICollection<TDocument> documents);
 

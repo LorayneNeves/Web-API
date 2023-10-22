@@ -13,8 +13,13 @@ namespace Application.Interfaces
         Task<ProdutoViewModel> ObterPorId(Guid id);
         Task<IEnumerable<ProdutoViewModel>> ObterPorCategoria(int codigo);
 
+        IEnumerable<ProdutoViewModel> ObterPorNome(string nome);
         Task Adicionar(NovoProdutoViewModel produto);
-        void Atualizar(ProdutoViewModel produto);
+        Task Atualizar(Guid id,ProdutoViewModel produto);
         Task Desativar(Guid id);
+        Task Ativar(Guid id);
+        Task DebitarEstoque(Guid id, int quantidade);
+        Task ReporEstoque(Guid id, int quantidade);
+        Task AtualizarValor(Guid id, decimal novoValor);
     }
 }

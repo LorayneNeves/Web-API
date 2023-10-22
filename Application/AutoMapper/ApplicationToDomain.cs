@@ -21,6 +21,11 @@ namespace Application.AutoMapper
             CreateMap<NovoProdutoViewModel, Produto>()
                .ConstructUsing(q => new Produto(q.Nome, q.Descricao, q.Ativo, q.Valor, q.DataCadastro, q.Imagem, q.QuantidadeEstoque));
 
+            CreateMap<CategoriaViewModel, Categoria>()
+               .ConstructUsing(q => new Categoria(q.Descricao, q.Ativo));
+
+            CreateMap<NovaCategoriaViewModel, Categoria>()
+               .ConstructUsing(q => new Categoria(q.Descricao, q.Ativo));
         }
     }
 }

@@ -32,6 +32,8 @@ builder.Services.AddScoped(typeof(IMongoRepository<>), typeof(MongoRepository<>)
 builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
 builder.Services.AddScoped<IProdutoService, ProdutoService>();
 
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -58,6 +58,7 @@ namespace Domain
         public void Desativar() => Ativo = false;
 
         public void AlterarDescricao(string descricao) => Descricao = descricao;
+        public void AlterarNome(string nome) => Nome = nome;
         public void AlterarCategoria(Guid categoriaID) => CategoriaID = categoriaID;
 
         public void DebitarEstoque(int quantidade)
@@ -72,6 +73,18 @@ namespace Domain
         }
 
         public bool PossuiEstoque(int quantidade) => QuantidadeEstoque >= quantidade;
+
+        public void AtualizarValor(decimal valor) => Valor = valor;
+
+        public void Atualizar(string nome, string descricao, bool ativo, decimal valor, int quantidade)
+        {
+            Nome = nome;
+            Descricao = descricao;
+            Ativo = ativo;
+            Valor = valor;
+            QuantidadeEstoque = quantidade;
+
+        } 
 
         #endregion
     }

@@ -15,5 +15,6 @@ namespace Application.Interfaces
 
         Task Adicionar(NovaCategoriaViewModel categoriaViewModel);
         void Atualizar(NovaCategoriaViewModel categoriaViewModel);
+
     }
 }

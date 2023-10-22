@@ -1,5 +1,4 @@
 ﻿using Application.CustomValidation;
-using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.ViewModels
 {
-    public class NovoProdutoViewModel
+    public class EditaProdutoViewModel
     {
         public string Nome { get; set; }
         public Guid CategoriaId { get; set; }

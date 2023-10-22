@@ -15,6 +15,7 @@ namespace Application.AutoMapper
         public DomainToApplication()
         {
             CreateMap<Produto, ProdutoViewModel>();
+            CreateMap<Categoria, CategoriaViewModel>();
         }
     }
 }

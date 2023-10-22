@@ -12,8 +12,13 @@ namespace Domain.Interface
         Task<Produto> ObterPorId(Guid id);
         Task<IEnumerable<Produto>> ObterPorCategoria(int codigo);
 
+        IEnumerable<Produto> ObterPorNome(string nome);
         Task Adicionar(Produto produto);
         Task Desativar(Produto produto);
-        void Atualizar(Produto produto);
+        Task Ativar(Produto produto);
+        Task Atualizar(Produto produto);
+        Task AtualizarValor(Guid id, decimal novoValor);
+        Task DebitarEstoque(Produto produto);
+        Task ReporEstoque(Produto produto);
     }
 }
