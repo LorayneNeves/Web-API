@@ -68,13 +68,13 @@ namespace WebApplication1.Controllers
         [HttpPut]
         [Route("AtualizarValor/{id}")]
         [ActionName("AtualizarValor")]
-        public async Task<IActionResult> AtualizarValor(Guid id, [FromBody] decimal novoValor)
+        public async Task<IActionResult> AtualizarValor(Guid id, [FromBody] ProdutoViewModel produtoViewModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            await _produtoService.AtualizarValor(id, novoValor);
+            await _produtoService.AtualizarValor(id, produtoViewModel);
             return Ok("Valor do produto atualizado com sucesso");
         }
 
@@ -88,7 +88,7 @@ namespace WebApplication1.Controllers
                 return BadRequest(ModelState);
             }
             await _produtoService.DebitarEstoque(id, quantidade);
-            return Ok("Valor do produto atualizado com sucesso");
+            return Ok("Produto debitado com sucesso");
         } 
         
         [HttpPut]
@@ -101,7 +101,7 @@ namespace WebApplication1.Controllers
                 return BadRequest(ModelState);
             }
             await _produtoService.ReporEstoque(id, quantidade);
-            return Ok("Valor do produto atualizado com sucesso");
+            return Ok("Produto acrescentado com sucesso");
         }
 
         [HttpPut]

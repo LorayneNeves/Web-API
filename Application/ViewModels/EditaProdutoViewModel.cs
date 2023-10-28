@@ -1,5 +1,4 @@
-﻿using Application.CustomValidation;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -16,11 +15,12 @@ namespace Application.ViewModels
         public string Descricao { get; set; }
         public bool Ativo { get; set; }
 
-        [Required(ErrorMessage = "O campo Valor é obrigatório.")]
-        [ValorProdutoValidation(ErrorMessage = "O valor do produto deve ser maior que zero.")]
+        [Required(ErrorMessage = "O campo Valor é obrigatório")]
+        [Range(0.01, double.MaxValue, ErrorMessage = "O campo Valor deve ser maior que zero")]
         public decimal Valor { get; set; }
         public DateTime DataCadastro { get; set; }
         public string Imagem { get; set; }
+        [Range(0, double.MaxValue, ErrorMessage = "A quantidade em estoque não pode ser negativa.")]
         public int QuantidadeEstoque { get; set; }
     }
 }

@@ -20,6 +20,7 @@ namespace Application.Interfaces
         Task Ativar(Guid id);
         Task DebitarEstoque(Guid id, int quantidade);
         Task ReporEstoque(Guid id, int quantidade);
-        Task AtualizarValor(Guid id, decimal novoValor);
+        Task AtualizarValor(Guid id, ProdutoViewModel produto);
+        Task AtualizarEstoque(Guid id, ProdutoViewModel produto);
     }
 }

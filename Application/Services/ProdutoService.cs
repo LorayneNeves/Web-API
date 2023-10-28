@@ -41,19 +41,16 @@ namespace Application.Services
 
             var buscaProduto = await _produtoRepository.ObterPorId(id);
 
-            if (buscaProduto == null) throw new ApplicationException("Não é possível desativar um produto que não existe!");
+            if (buscaProduto == null) throw new ApplicationException("Não é possível atualizar um produto que não existe!");
 
-            // Mapeie os valores da ViewModel para o produto existente
             buscaProduto.AlterarDescricao(produtoViewModel.Descricao);
             buscaProduto.AlterarNome(produtoViewModel.Nome);
-            // buscaProduto.Ativar(produtoViewModel.Ativo);
+            buscaProduto.Ativar();
+            buscaProduto.Desativar();
             buscaProduto.AtualizarValor(produtoViewModel.Valor);
             //buscaProduto.AtualizarImagem(produtoViewModel.Imagem);
-            buscaProduto.PossuiEstoque(produtoViewModel.QuantidadeEstoque);
+            buscaProduto.AtualizarEstoque(produtoViewModel.QuantidadeEstoque);
 
-            // Certifique-se de que a validação e manipulação dos valores sejam adequados, por exemplo, validando o valor maior que zero
-
-            // Chame o método no repositório para atualizar o produto
             await _produtoRepository.Atualizar(buscaProduto);
         }
 
@@ -83,7 +80,6 @@ namespace Application.Services
                 throw new ApplicationException("Produto não encontrado");
             }
 
-            // Mapeie o objeto Produto para um ProdutoViewModel, se necessário.
             var produtoViewModel = new ProdutoViewModel
             {
                 CodigoId = buscaProduto.CodigoId,
@@ -93,8 +89,7 @@ namespace Application.Services
                 Ativo = buscaProduto.Ativo,
                 Valor = buscaProduto.Valor,
                 DataCadastro = buscaProduto.DataCadastro,
-                QuantidadeEstoque = buscaProduto.QuantidadeEstoque,
-                // Outras propriedades aqui...
+                QuantidadeEstoque = buscaProduto.QuantidadeEstoque,              
             };
 
             return produtoViewModel;
@@ -103,7 +98,6 @@ namespace Application.Services
         {
             var produtos = _produtoRepository.ObterPorNome(nome);
 
-            // Mapeie os objetos Produto para ProdutoViewModel usando o AutoMapper, se necessário
             var produtosViewModel = _mapper.Map<IEnumerable<ProdutoViewModel>>(produtos);
 
             return produtosViewModel;
@@ -129,7 +123,7 @@ namespace Application.Services
         {
             var buscaProduto = await _produtoRepository.ObterPorId(id);
 
-            if (buscaProduto == null) throw new ApplicationException("Não é possível ativar um produto que não existe!");
+            if (buscaProduto == null) throw new ApplicationException("Não é possível debitar um produto que não existe!");
 
             buscaProduto.DebitarEstoque(quantidade);
 
@@ -140,7 +134,7 @@ namespace Application.Services
         {
             var buscaProduto = await _produtoRepository.ObterPorId(id);
 
-            if (buscaProduto == null) throw new ApplicationException("Não é possível ativar um produto que não existe!");
+            if (buscaProduto == null) throw new ApplicationException("Não é possível repor um produto que não existe!");
 
             buscaProduto.ReporEstoque(quantidade);
 
@@ -148,16 +142,26 @@ namespace Application.Services
 
         }
 
-        public async Task AtualizarValor(Guid id, decimal novoValor)
+        public async Task AtualizarValor(Guid id, ProdutoViewModel produtoViewModel)
         {
             var buscaProduto = await _produtoRepository.ObterPorId(id);
-            if (novoValor <= 0) throw new ApplicationException("Valor deve ser maior que 0");
 
             if (buscaProduto == null) throw new ApplicationException("Produto não encontrado");
 
-            buscaProduto.AtualizarValor(novoValor);
+            buscaProduto.AtualizarValor(produtoViewModel.Valor);
 
-            await _produtoRepository.AtualizarValor(buscaProduto.CodigoId, novoValor);
+            await _produtoRepository.AtualizarValor(buscaProduto);
+
+        } 
+        public async Task AtualizarEstoque(Guid id, ProdutoViewModel produtoViewModel)
+        {
+            var buscaProduto = await _produtoRepository.ObterPorId(id);
+
+            if (buscaProduto == null) throw new ApplicationException("Produto não encontrado");
+
+            buscaProduto.AtualizarEstoque(produtoViewModel.QuantidadeEstoque);
+
+            await _produtoRepository.AtualizarEstoque(buscaProduto);
 
         }
         #endregion

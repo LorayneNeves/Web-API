@@ -17,8 +17,9 @@ namespace Domain.Interface
         Task Desativar(Produto produto);
         Task Ativar(Produto produto);
         Task Atualizar(Produto produto);
-        Task AtualizarValor(Guid id, decimal novoValor);
+        Task AtualizarValor(Produto produto);
         Task DebitarEstoque(Produto produto);
         Task ReporEstoque(Produto produto);
+        Task AtualizarEstoque(Produto produto);
     }
 }

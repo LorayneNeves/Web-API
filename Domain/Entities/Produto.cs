@@ -10,7 +10,6 @@ namespace Domain
 {
     public class Produto : EntidadeBase
     {
-
         #region 1 - Contrutores
 
         public Produto(string nome, string descricao, bool ativo, decimal valor, DateTime dataCadastro, string imagem, int quantidadeEstoque)
@@ -35,7 +34,6 @@ namespace Domain
             Imagem = imagem;
             QuantidadeEstoque = quantidadeEstoque;
         }
-
 
         #endregion
 
@@ -73,6 +71,8 @@ namespace Domain
         }
 
         public bool PossuiEstoque(int quantidade) => QuantidadeEstoque >= quantidade;
+
+        public int AtualizarEstoque(int quantidade) => QuantidadeEstoque = quantidade;
 
         public void AtualizarValor(decimal valor) => Valor = valor;
 

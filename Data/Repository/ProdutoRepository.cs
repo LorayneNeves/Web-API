@@ -33,22 +33,23 @@ namespace Data.Repository
 
         public async Task Atualizar(Produto produto)
         {
-            var existingProduct = _produtoRepository.FilterBy(filter => filter.CodigoId == produto.CodigoId).FirstOrDefault();
+            var buscaProduto = _produtoRepository.FilterBy(filter => filter.CodigoId == produto.CodigoId);
+            
 
-            if (existingProduct == null)
-            {
-                throw new ApplicationException("Produto não encontrado");
-            }
+            if (buscaProduto == null) { throw new ApplicationException("Produto não encontrado"); }
 
-            // Atualize as propriedades do registro existente com base no objeto Produto fornecido
-            existingProduct.Nome = produto.Nome;
-            existingProduct.Descricao = produto.Descricao;
-            existingProduct.Ativo = produto.Ativo;
-            existingProduct.Valor = produto.Valor;
-            existingProduct.QuantidadeEstoque = produto.QuantidadeEstoque;
+            var produtoCollection = _mapper.Map<ProdutoCollection>(produto);
+            produtoCollection.Id = buscaProduto.FirstOrDefault().Id;
 
-            // Execute a operação de atualização no banco de dados
-            await _produtoRepository.ReplaceOneAsync(existingProduct);
+            produtoCollection.Nome = produto.Nome;
+            produtoCollection.Descricao = produto.Descricao;
+            produtoCollection.Ativo = produto.Ativo;
+            produtoCollection.Valor = produto.Valor;
+            produtoCollection.QuantidadeEstoque = produto.QuantidadeEstoque;
+
+            
+
+            await _produtoRepository.ReplaceOneAsync(produtoCollection);
         }
 
         public async Task Desativar(Produto produto)
@@ -64,12 +65,25 @@ namespace Data.Repository
 
             await _produtoRepository.ReplaceOneAsync(produtoCollection);
         }
+        public async Task AtualizarEstoque(Produto produto)
+        {
+            var buscaProduto = _produtoRepository.FilterBy(filter => filter.CodigoId == produto.CodigoId);
+
+            if (buscaProduto == null) { throw new ApplicationException("Produto não encontrado"); }
+
+            var produtoCollection = _mapper.Map<ProdutoCollection>(produto);
+            produtoCollection.Id = buscaProduto.FirstOrDefault().Id;
+
+            produtoCollection.QuantidadeEstoque = produto.QuantidadeEstoque;
+
+            await _produtoRepository.ReplaceOneAsync(produtoCollection);
+        }
         public async Task DebitarEstoque(Produto produto)
         {
 
             var buscaProduto = _produtoRepository.FilterBy(filter => filter.CodigoId == produto.CodigoId);
 
-            if (buscaProduto == null) throw new ApplicationException("Não é possível desativar um produto que não existe");
+            if (buscaProduto == null) throw new ApplicationException("Não é possível debitar um produto que não existe");
 
             var produtoCollection = _mapper.Map<ProdutoCollection>(produto);
 
@@ -82,7 +96,7 @@ namespace Data.Repository
 
             var buscaProduto = _produtoRepository.FilterBy(filter => filter.CodigoId == produto.CodigoId);
 
-            if (buscaProduto == null) throw new ApplicationException("Não é possível desativar um produto que não existe");
+            if (buscaProduto == null) throw new ApplicationException("Não é possível repor um produto que não existe");
 
             var produtoCollection = _mapper.Map<ProdutoCollection>(produto);
 
@@ -129,7 +143,6 @@ namespace Data.Repository
             return produtosViewModel;
         }
     
-
         public async Task Ativar(Produto produto)
         {
             var buscaProduto = _produtoRepository.FilterBy(filter => filter.CodigoId == produto.CodigoId);
@@ -142,19 +155,20 @@ namespace Data.Repository
 
             await _produtoRepository.ReplaceOneAsync(produtoCollection);
         }
-        public async Task AtualizarValor(Guid id, decimal novoValor)
+        public async Task AtualizarValor(Produto produto)
         {
-            var buscaProduto = _produtoRepository.FilterBy(filter => filter.CodigoId == id);
+            var buscaProduto = _produtoRepository.FilterBy(filter => filter.CodigoId == produto.CodigoId);
 
-            var produtoCollection = buscaProduto.FirstOrDefault();
 
-            if (produtoCollection == null) throw new ApplicationException("Produto não encontrado");
+            if (buscaProduto == null) { throw new ApplicationException("Produto não encontrado"); }
 
-            produtoCollection.Valor = novoValor;
+            var produtoCollection = _mapper.Map<ProdutoCollection>(produto);
+            produtoCollection.Id = buscaProduto.FirstOrDefault().Id;
+
+            produtoCollection.Valor = produto.Valor;
 
             await _produtoRepository.ReplaceOneAsync(produtoCollection);
         }
-
 
 
         #endregion
