@@ -8,6 +8,7 @@ using Data.Providers.MongoDb;
 using Data.Repository;
 using Domain.Interface;
 using Microsoft.Extensions.Options;
+using Infra.EmailService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,7 +33,8 @@ builder.Services.AddScoped(typeof(IMongoRepository<>), typeof(MongoRepository<>)
 builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
 builder.Services.AddScoped<IProdutoService, ProdutoService>();
 
-
+builder.Services.Configure<EmailConfig>(
+    builder.Configuration.GetSection("EmailConfig"));
 
 var app = builder.Build();
 
