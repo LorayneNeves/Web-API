@@ -26,6 +26,12 @@ namespace Application.AutoMapper
 
             CreateMap<NovaCategoriaViewModel, Categoria>()
                .ConstructUsing(q => new Categoria(q.Descricao, q.Ativo));
+
+            CreateMap<FornecedorViewModel, Fornecedor>()
+               .ConstructUsing(q => new Fornecedor(q.Nome, q.Cnpj, q.RazaoSocial, q.DataCadastro, q.Ativo));
+
+            CreateMap<NovoFornecedorViewModel, Fornecedor>()
+               .ConstructUsing(q => new Fornecedor(q.Nome, q.Cnpj, q.RazaoSocial, q.DataCadastro, q.Ativo));
         }
     }
 }

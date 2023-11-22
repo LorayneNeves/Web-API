@@ -1,22 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Providers.MongoDb.Collections
+namespace Application.ViewModels
 {
-    [BsonCollection("Fornecedor")]
-    public class FornecedorCollection : Document
+    public class FornecedorViewModel
     {
-        #region propriedades
         public Guid CodigoId { get; set; }
         public string Nome { get; set; }
         public string Cnpj { get; set; }
         public string RazaoSocial { get; set; }
         public DateTime DataCadastro { get; set; }
         public bool Ativo { get; set; }
-        #endregion
     }
 }

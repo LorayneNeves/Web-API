@@ -10,8 +10,6 @@ namespace Data.Providers.MongoDb.Collections
     [BsonCollection("Produto")]
     public class ProdutoCollection : Document
     {
-
-
         #region 2 - Propriedades
         public Guid CodigoId { get; set; }
         public Guid CategoriaId { get; set; }
@@ -24,6 +22,5 @@ namespace Data.Providers.MongoDb.Collections
         public int QuantidadeEstoque { get; set; }
 
         #endregion
-
     }
 }

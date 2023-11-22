@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="FileJsonData\**" />
+    <Content Remove="FileJsonData\**" />
+    <EmbeddedResource Remove="FileJsonData\**" />
+    <None Remove="FileJsonData\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
@@ -16,7 +23,6 @@
   <ItemGroup>
     <Folder Include="Models\Response\" />
     <Folder Include="Data\" />
-    <Folder Include="FileJsonData\" />
   </ItemGroup>
 
   <ItemGroup>

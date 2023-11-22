@@ -16,6 +16,7 @@ namespace Application.AutoMapper
         {
             CreateMap<Produto, ProdutoViewModel>();
             CreateMap<Categoria, CategoriaViewModel>();
+            CreateMap<Fornecedor, FornecedorViewModel>();
         }
     }
 }

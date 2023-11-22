@@ -33,19 +33,82 @@ namespace Data.Repository
             await _fornecedorRepository.InsertOneAsync(novoFornecedorCollection);
         }
 
-        public Task Atualizar(Fornecedor fornecedor)
+        public async Task Ativar(Fornecedor fornecedor)
         {
-            throw new NotImplementedException();
+            var buscaFornecedor = _fornecedorRepository.FilterBy(filter => filter.CodigoId == fornecedor.CodigoId);
+
+            if (buscaFornecedor == null) throw new ApplicationException("Não é possível ativar um produto que não existe");
+
+            var fornecedorCollection = _mapper.Map<FornecedorCollection>(fornecedor);
+
+            fornecedorCollection.Id = buscaFornecedor.FirstOrDefault().Id;
+
+            await _fornecedorRepository.ReplaceOneAsync(fornecedorCollection);
         }
 
-        public Task<Fornecedor> ObterPorCnpj(string cnpj)
+        public async Task Atualizar(Fornecedor fornecedor)
         {
-            throw new NotImplementedException();
+            var buscaFornecedor = _fornecedorRepository.FilterBy(filter => filter.CodigoId == fornecedor.CodigoId);
+
+
+            if (buscaFornecedor == null) { throw new ApplicationException("Produto não encontrado"); }
+
+            var fornecedorCollection = _mapper.Map<FornecedorCollection>(fornecedor);
+
+            fornecedorCollection.Id = buscaFornecedor.FirstOrDefault().Id;
+            fornecedorCollection.Nome = fornecedor.Nome;
+            fornecedorCollection.Cnpj = fornecedor.Cnpj;
+            fornecedorCollection.DataCadastro = fornecedor.DataCadastro;
+            fornecedorCollection.Ativo = fornecedor.Ativo;
+
+            await _fornecedorRepository.ReplaceOneAsync(fornecedorCollection);
         }
 
-        public Task<Fornecedor> ObterPorId(int id)
+        public async Task Desativar(Fornecedor fornecedor)
         {
-            throw new NotImplementedException();
+            var buscaFornecedor = _fornecedorRepository.FilterBy(filter => filter.CodigoId == fornecedor.CodigoId);
+
+            if (buscaFornecedor == null) throw new ApplicationException("Não é possível desativar um produto que não existe");
+
+            var fornecedorCollection = _mapper.Map<FornecedorCollection>(fornecedor);
+
+            fornecedorCollection.Id = buscaFornecedor.FirstOrDefault().Id;
+
+            await _fornecedorRepository.ReplaceOneAsync(fornecedorCollection);
+        }
+
+        public async Task<Fornecedor> ObterPorCnpj(string cnpj)
+        {
+            var resultadoBuscaCnpj =  _fornecedorRepository.FilterBy(filtro => filtro.Cnpj == cnpj)
+            	.FirstOrDefault();
+            return _mapper.Map<Fornecedor>(resultadoBuscaCnpj);
+            
+
+        }
+
+        public async Task<Fornecedor> ObterPorId(Guid id)
+        {
+            var buscaFornecedor = _fornecedorRepository.FilterBy(filter => filter.CodigoId == id);
+
+            var fornecedor = _mapper.Map<Fornecedor>(buscaFornecedor.FirstOrDefault());
+
+            return fornecedor;
+        }
+
+        public IEnumerable<Fornecedor> ObterPorNome(string nome)
+        {
+            var buscaFornecedor = _fornecedorRepository.FilterBy(filter => filter.Nome.Contains(nome));
+
+            if (buscaFornecedor == null || !buscaFornecedor.Any())
+            {
+                // Se não houver produtos encontrados, você pode retornar uma lista vazia ou lançar uma exceção apropriada.
+                // Aqui, estou retornando uma lista vazia como exemplo.
+                return new List<Fornecedor>();
+            }
+
+            var fornecedoresViewModel = _mapper.Map<IEnumerable<Fornecedor>>(buscaFornecedor);
+
+            return fornecedoresViewModel;
         }
 
         public async Task<IEnumerable<Fornecedor>> ObterTodos()

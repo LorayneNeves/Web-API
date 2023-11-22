@@ -21,5 +21,7 @@ namespace Domain.Interface
         Task DebitarEstoque(Produto produto);
         Task ReporEstoque(Produto produto);
         Task AtualizarEstoque(Produto produto);
+        
+
     }
 }

@@ -16,6 +16,7 @@ namespace Data.AutoMapper
         {
             CreateMap<Produto, ProdutoCollection>();
             CreateMap<Categoria, CategoriaCollection>();
+            CreateMap<Fornecedor, FornecedorCollection>();
         }
     }
 }

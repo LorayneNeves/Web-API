@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Security.Cryptography;
@@ -8,9 +9,19 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class Fornecedor
+    public class Fornecedor : EntidadeBase
     {
         #region Construtor
+
+        public Fornecedor(Guid codigoId, string nome, string cnpj, string razaoSocial, DateTime dataCadastro, bool ativo)
+        {
+            CodigoId = codigoId;
+            Nome = nome;
+            Cnpj = cnpj;
+            RazaoSocial = razaoSocial;
+            DataCadastro = dataCadastro;
+            Ativo = ativo;
+        }
 
         public Fornecedor(string nome, string cnpj, string razaoSocial, DateTime dataCadastro, bool ativo)
         {
@@ -24,7 +35,6 @@ namespace Domain.Entities
         #endregion
 
         #region propriedades
-
         public string Nome { get; private set; }
         public string Cnpj { get; private set; }
         public string RazaoSocial { get; private set; }
@@ -44,7 +54,15 @@ namespace Domain.Entities
         public void AlterarRazaoSocial(string razaoSocial) => RazaoSocial = razaoSocial;
         public void AlterarCNPJ(string cnpj) => Cnpj = cnpj;
 
+        public void Atualizar(string nome, string cnpj,string razaoSocial,DateTime dataCadastro, bool ativo)
+        {
+            Nome = nome;
+            Cnpj = cnpj;
+            RazaoSocial = razaoSocial;
+            DataCadastro = dataCadastro;
+            Ativo = ativo;
 
+        }
         #endregion
     }
 }

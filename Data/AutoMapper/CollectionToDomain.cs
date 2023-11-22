@@ -22,7 +22,7 @@ namespace Data.AutoMapper
                .ConstructUsing(q => new Categoria(q.CodigoId, q.Descricao, q.Ativo));
 
             CreateMap<FornecedorCollection, Fornecedor>()
-                    .ConstructUsing(f => new Fornecedor(f.Nome, f.Cnpj, f.RazaoSocial, f.DataCadastro, f.Ativo));
+                    .ConstructUsing(f => new Fornecedor(f.CodigoId, f.Nome, f.Cnpj, f.RazaoSocial, f.DataCadastro, f.Ativo));
         }
     }
 }
