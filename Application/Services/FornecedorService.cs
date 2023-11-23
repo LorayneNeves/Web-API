@@ -102,6 +102,11 @@ namespace Application.Services
 
             return fornecedoreViewModel;
         }
+
+        public IEnumerable<FornecedorViewModel> ObterTodosF()
+        {
+            return _mapper.Map<IEnumerable<FornecedorViewModel>>(_fornecedorRepository.ObterTodosF());
+        }
         #endregion
     }
 }

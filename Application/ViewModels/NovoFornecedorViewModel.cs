@@ -8,7 +8,6 @@ namespace Application.ViewModels
 {
     public class NovoFornecedorViewModel
     {
-        public Guid CodigoId { get; set; }
         public string Nome { get; set; }
         public string Cnpj { get; set; }
         public string RazaoSocial { get; set; }

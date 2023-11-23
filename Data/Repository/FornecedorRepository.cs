@@ -29,8 +29,7 @@ namespace Data.Repository
 
         public async Task Adicionar(Fornecedor fornecedor)
         {
-            var novoFornecedorCollection = _mapper.Map<FornecedorCollection>(fornecedor);
-            await _fornecedorRepository.InsertOneAsync(novoFornecedorCollection);
+            await _fornecedorRepository.InsertOneAsync(_mapper.Map<FornecedorCollection>(fornecedor));
         }
 
         public async Task Ativar(Fornecedor fornecedor)
@@ -111,17 +110,17 @@ namespace Data.Repository
             return fornecedoresViewModel;
         }
 
-        public async Task<IEnumerable<Fornecedor>> ObterTodos()
-        {
-            var listaDeFornecedores = _fornecedorRepository.FilterBy(filtro => true);
-
-            return _mapper.Map<IEnumerable<Fornecedor>>(listaDeFornecedores);
-
-        }
 
         public Task Remover(Fornecedor fornecedor)
         {
             throw new NotImplementedException();
+        }
+
+        IEnumerable<Fornecedor> IFornecedorRepository.ObterTodosF()
+        {
+            var fornecedorList = _fornecedorRepository.FilterBy(filter => true);
+
+            return _mapper.Map<IEnumerable<Fornecedor>>(fornecedorList);
         }
     }
 }

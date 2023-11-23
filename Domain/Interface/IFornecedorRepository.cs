@@ -9,12 +9,7 @@ namespace Domain.Interface
 {
     public interface IFornecedorRepository
     {
-
-       // public Task<Fornecedor> ObterPorId(int id);
-       // public Task<Fornecedor> ObterPorCnpj(string cnpj);
-       // public Task<IEnumerable<Fornecedor>> ObterTodos();
-
-        
+        IEnumerable<Fornecedor> ObterTodosF();
         Task Adicionar(Fornecedor fornecedor);
         public Task Atualizar(Fornecedor fornecedor);
         public Task Remover(Fornecedor fornecedor);

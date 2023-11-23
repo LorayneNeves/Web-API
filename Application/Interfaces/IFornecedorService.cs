@@ -10,8 +10,8 @@ namespace Application.Interfaces
 {
     public interface IFornecedorService
     {
+        IEnumerable<FornecedorViewModel> ObterTodosF();
         Task<FornecedorViewModel> ObterPorId(Guid id);
-
         IEnumerable<FornecedorViewModel> ObterPorNome(string nome);
         Task Adicionar(NovoFornecedorViewModel fornecedorViewModel);
         Task Atualizar(Guid id, FornecedorViewModel fornecedor);

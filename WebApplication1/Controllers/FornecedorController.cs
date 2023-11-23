@@ -1,9 +1,12 @@
 ﻿using Application.Interfaces;
+using Application.Services;
 using Application.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApplication1.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class FornecedorController : ControllerBase
     {
         private readonly IFornecedorService _fornecedorService;
@@ -13,12 +16,18 @@ namespace WebApplication1.Controllers
             _fornecedorService = fornecedorService;
         }
 
-        [HttpPost(Name = "Adicionar")]
-        public IActionResult Post(Application.ViewModels.NovoFornecedorViewModel novoFornecedorViewModel)
+        [HttpPost]
+        public IActionResult Post([FromBody] Application.ViewModels.NovoFornecedorViewModel novoFornecedorViewModel)
         {
             _fornecedorService.Adicionar(novoFornecedorViewModel);
 
             return Ok();
+        }
+
+        [HttpGet(Name = "ObterTodosF")]
+        public IActionResult Get()
+        {
+            return Ok(_fornecedorService.ObterTodosF());
         }
 
         [HttpGet]
