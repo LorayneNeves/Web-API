@@ -9,6 +9,7 @@ using Data.Repository;
 using Domain.Interface;
 using Microsoft.Extensions.Options;
 using Infra.EmailService;
+using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,6 +39,7 @@ builder.Services.AddScoped<ICategoriaService, CategoriaService>();
 
 builder.Services.AddScoped<IFornecedorRepository, FornecedorRepository>();
 builder.Services.AddScoped<IFornecedorService, FornecedorService>();
+
 
 builder.Services.Configure<EmailConfig>(
     builder.Configuration.GetSection("EmailConfig"));

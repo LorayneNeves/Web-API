@@ -19,9 +19,7 @@ namespace Data.Repository
         private readonly IMongoRepository<FornecedorCollection> _fornecedorRepository;
         private readonly IMapper _mapper;
 
-        public FornecedorRepository(IMongoRepository<FornecedorCollection> fornecedorRepository,
-            IMapper mapper
-            )
+        public FornecedorRepository(IMongoRepository<FornecedorCollection> fornecedorRepository, IMapper mapper)
         {
             _fornecedorRepository = fornecedorRepository;
             _mapper = mapper;
