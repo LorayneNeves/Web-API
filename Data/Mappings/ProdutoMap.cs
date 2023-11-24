@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Repository
+namespace Data.Mappings
 {
-    public class GestaoProdutoContext : DbContext
+    public class ProdutoMap
     {
     }
 }
