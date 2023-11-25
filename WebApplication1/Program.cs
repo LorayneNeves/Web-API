@@ -10,6 +10,8 @@ using Domain.Interface;
 using Microsoft.Extensions.Options;
 using Infra.EmailService;
 using MongoDB.Driver;
+using Infra;
+using Infra.Autenticacao.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,6 +42,15 @@ builder.Services.AddScoped<ICategoriaService, CategoriaService>();
 builder.Services.AddScoped<IFornecedorRepository, FornecedorRepository>();
 builder.Services.AddScoped<IFornecedorService, FornecedorService>();
 
+
+builder.Services.Configure<Token>(
+    builder.Configuration.GetSection("token"));
+
+
+builder.Services.AddScoped<ITokenService, TokenService>();
+
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 
 builder.Services.Configure<EmailConfig>(
     builder.Configuration.GetSection("EmailConfig"));

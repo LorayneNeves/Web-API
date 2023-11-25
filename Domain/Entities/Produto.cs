@@ -84,8 +84,8 @@ namespace Domain
             Valor = valor;
             QuantidadeEstoque = quantidade;
 
-        } 
-
+        }
+        public bool EstoqueMinimo(int quantidades = 3) => QuantidadeEstoque <= quantidades;
         #endregion
     }
 }

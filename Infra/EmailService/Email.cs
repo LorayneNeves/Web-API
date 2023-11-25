@@ -18,7 +18,7 @@ namespace Infra.EmailService
                 Credentials = new NetworkCredential(emailConfig.Usuario, emailConfig.Senha),
                 EnableSsl = true
             };
-            client.Send("from@example.com", destinatario, assunto, corpoemail);
+            client.Send("no-reply@example.com", destinatario, assunto, corpoemail);
         }
     }
 }

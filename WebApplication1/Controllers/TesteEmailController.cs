@@ -4,6 +4,8 @@ using Microsoft.Extensions.Options;
 
 namespace WebApplication1.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class TesteEmailController : ControllerBase
 	{
 		private readonly EmailConfig _emailConfig;
@@ -18,9 +20,9 @@ namespace WebApplication1.Controllers
         public async Task<IActionResult> Post()
         {
             string assunto = "Teste E-mail";
-            string corpoEmailModelo = "Olá {nomeCliente} teste E-mail. ";
-            string nome = "h1";
-            string emailDestino = "1bertomelo@gmail.com";
+            string corpoEmailModelo = "Olá Comprador(a) , o produto {descricaoProduto} está abaixo do estoque mínimo {estoqueMinimo} definido no sistema, logo, você precisa avaliar se é necessário realizar um novo pedido de compra.";
+            string nome = "Lorayne";
+            string emailDestino = "lorayne3.8neves@gmail.com";
 
             string corpoEmail = corpoEmailModelo.Replace("{nomeCliente}", nome);
 
