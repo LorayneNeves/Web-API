@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Domain;
+using Infra.EmailService;
 
 namespace Application.Services
 {
@@ -29,7 +30,7 @@ namespace Application.Services
         {
             var novoProduto = _mapper.Map<Produto>(novoProdutoViewModel);
 
-            Produto p = new Produto(novoProdutoViewModel.Descricao, novoProdutoViewModel.Descricao, novoProdutoViewModel.Ativo, novoProdutoViewModel.Valor, novoProdutoViewModel.DataCadastro, novoProdutoViewModel.Imagem, novoProdutoViewModel.QuantidadeEstoque);
+            Produto p = new Produto(novoProdutoViewModel.Descricao, novoProdutoViewModel.Descricao, novoProdutoViewModel.Ativo, novoProdutoViewModel.Valor, novoProdutoViewModel.DataCadastro, novoProdutoViewModel.Imagem, novoProdutoViewModel.QuantidadeEstoque, novoProdutoViewModel.EstoqueMinimo);
 
             await _produtoRepository.Adicionar(novoProduto);
 
@@ -152,18 +153,38 @@ namespace Application.Services
 
             await _produtoRepository.AtualizarValor(buscaProduto);
 
-        } 
+        }
         public async Task AtualizarEstoque(Guid id, ProdutoViewModel produtoViewModel)
         {
             var buscaProduto = await _produtoRepository.ObterPorId(id);
 
-            if (buscaProduto == null) throw new ApplicationException("Produto não encontrado");
+            if (buscaProduto == null)
+                throw new ApplicationException("Produto não encontrado");
 
+            // Atualize o estoque
             buscaProduto.AtualizarEstoque(produtoViewModel.QuantidadeEstoque);
 
-            await _produtoRepository.AtualizarEstoque(buscaProduto);
+            // Verifique se o estoque está abaixo do mínimo
+            if (buscaProduto.EstoqueAbaixoMinimo)
+            {
+                // Se sim, envie o e-mail
+                string assunto = "Estoque abaixo do mínimo";
+                string corpoEmailModelo = $"Olá Comprador(a), o produto {buscaProduto.Descricao} está abaixo do estoque mínimo {buscaProduto.EstoqueMinimo} definido no sistema, logo, você precisa avaliar se é necessário realizar um novo pedido de compra.";
+                string destinatario = "lorayne3.8neves@gmail.com"; // Substitua pelo e-mail correto do destinatário
+                EmailConfig emailConfig = new EmailConfig();
+                string corpoEmail = corpoEmailModelo.Replace("{nomeCliente}", buscaProduto.Nome);
 
+                if (!string.IsNullOrEmpty(destinatario))
+                {
+                    Email.Enviar(assunto, corpoEmail, destinatario, emailConfig);
+                }
+            }
+
+            // Atualize o produto no repositório
+            await _produtoRepository.AtualizarEstoque(buscaProduto);
         }
+
+
         #endregion
     }
 }

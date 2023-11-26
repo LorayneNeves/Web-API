@@ -170,7 +170,6 @@ namespace Data.Repository
             await _produtoRepository.ReplaceOneAsync(produtoCollection);
         }
 
-
         #endregion
 
     }

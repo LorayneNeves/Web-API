@@ -12,7 +12,7 @@ namespace Domain
     {
         #region 1 - Contrutores
 
-        public Produto(string nome, string descricao, bool ativo, decimal valor, DateTime dataCadastro, string imagem, int quantidadeEstoque)
+        public Produto(string nome, string descricao, bool ativo, decimal valor, DateTime dataCadastro, string imagem, int quantidadeEstoque, int estoqueMinimo)
         {
             Nome = nome;
             Descricao = descricao;
@@ -21,9 +21,10 @@ namespace Domain
             DataCadastro = dataCadastro;
             Imagem = imagem;
             QuantidadeEstoque = quantidadeEstoque;
+            EstoqueMinimo = estoqueMinimo;
         }
 
-        public Produto(Guid codigoId, string nome, string descricao, bool ativo, decimal valor, DateTime dataCadastro, string imagem, int quantidadeEstoque)
+        public Produto(Guid codigoId, string nome, string descricao, bool ativo, decimal valor, DateTime dataCadastro, string imagem, int quantidadeEstoque, int estoqueMinimo)
         {
             CodigoId = codigoId;
             Nome = nome;
@@ -33,6 +34,7 @@ namespace Domain
             DataCadastro = dataCadastro;
             Imagem = imagem;
             QuantidadeEstoque = quantidadeEstoque;
+            EstoqueMinimo = estoqueMinimo;
         }
 
         #endregion
@@ -45,6 +47,7 @@ namespace Domain
         public DateTime DataCadastro { get; private set; }
         public string Imagem { get; private set; }
         public int QuantidadeEstoque { get; private set; }
+        public int EstoqueMinimo { get; private set; }
         public Guid CategoriaID { get; private set; }
 
         #endregion
@@ -85,7 +88,7 @@ namespace Domain
             QuantidadeEstoque = quantidade;
 
         }
-        public bool EstoqueMinimo(int quantidades = 3) => QuantidadeEstoque <= quantidades;
+        public bool EstoqueAbaixoMinimo => QuantidadeEstoque < EstoqueMinimo;
         #endregion
     }
 }

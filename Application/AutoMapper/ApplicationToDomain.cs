@@ -16,10 +16,10 @@ namespace Application.AutoMapper
         {
 
             CreateMap<ProdutoViewModel, Produto>()
-               .ConstructUsing(q => new Produto(q.Nome, q.Descricao, q.Ativo, q.Valor, q.DataCadastro, q.Imagem, q.QuantidadeEstoque));
+               .ConstructUsing(q => new Produto(q.Nome, q.Descricao, q.Ativo, q.Valor, q.DataCadastro, q.Imagem, q.QuantidadeEstoque, q.EstoqueMinimo));
 
             CreateMap<NovoProdutoViewModel, Produto>()
-               .ConstructUsing(q => new Produto(q.Nome, q.Descricao, q.Ativo, q.Valor, q.DataCadastro, q.Imagem, q.QuantidadeEstoque));
+               .ConstructUsing(q => new Produto(q.Nome, q.Descricao, q.Ativo, q.Valor, q.DataCadastro, q.Imagem, q.QuantidadeEstoque, q.EstoqueMinimo));
 
             CreateMap<CategoriaViewModel, Categoria>()
                .ConstructUsing(q => new Categoria(q.Descricao, q.Ativo));

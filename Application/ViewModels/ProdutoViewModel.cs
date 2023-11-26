@@ -24,5 +24,7 @@ namespace Application.ViewModels
 
         [Range(0, double.MaxValue, ErrorMessage = "A quantidade em estoque não pode ser negativa.")]
         public int QuantidadeEstoque { get; set; }
+        [Range(3, double.MaxValue, ErrorMessage = "A quantidade minima em estoque é de 3 produtos.")]
+        public int EstoqueMinimo { get; set; }
     }
 }
