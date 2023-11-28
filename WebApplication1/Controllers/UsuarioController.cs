@@ -1,6 +1,9 @@
 ﻿using Application.Interfaces;
+using Application.Services;
 using Application.ViewModels;
 using AutoMapper;
+using Domain.Entities;
+using Domain.Interface;
 using Infra;
 using Microsoft.AspNetCore.Mvc;
 

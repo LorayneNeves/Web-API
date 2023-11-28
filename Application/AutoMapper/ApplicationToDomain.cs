@@ -32,6 +32,9 @@ namespace Application.AutoMapper
 
             CreateMap<NovoFornecedorViewModel, Fornecedor>()
                .ConstructUsing(q => new Fornecedor(q.Nome, q.Cnpj, q.RazaoSocial, q.DataCadastro, q.Ativo));
+            
+            CreateMap<UsuarioViewModel, Usuario>()
+               .ConstructUsing(q => new Usuario(q.Login, q.Senha, q.Ativo));
 
         }
     }
