@@ -3,9 +3,14 @@ using Data.Providers.MongoDb.Collections;
 using Data.Providers.MongoDb.Interfaces;
 using Domain.Entities;
 using Domain.Interface;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,31 +18,20 @@ namespace Data.Repository
 {
     public class UsuarioRepository : IUsuarioRepository
     {
+        private readonly GestaoProdutoContext _context;
 
-        private readonly IMongoRepository<UsuarioCollection> _usuarioRepository;
-        private readonly IMapper _mapper;
-        public UsuarioRepository(
-            IMongoRepository<UsuarioCollection> usuarioRepository,
-            IMapper mapper
-        )
+        public UsuarioRepository(GestaoProdutoContext context)
         {
-            _usuarioRepository = usuarioRepository;
-            _mapper = mapper;
+            _context = context;
         }
 
         public async Task<Usuario> Autenticar(string login, string senha)
         {
-            var usuarioCollection = await _usuarioRepository.FindOneAsync(filtro =>
-                        filtro.Login == login && filtro.Senha == senha);
-            return _mapper.Map<Usuario>(usuarioCollection);
-
-
+            return await _context.Usuarios
+                .FirstOrDefaultAsync(filtro => filtro.Login == login && filtro.Senha == senha);
         }
 
-        public async Task Cadastrar(Usuario novoUsuario)
-        {
-            var novoUsuarioCollection = _mapper.Map<UsuarioCollection>(novoUsuario);
-            await _usuarioRepository.InsertOneAsync(novoUsuarioCollection);
-        }
+        
     }
+
 }

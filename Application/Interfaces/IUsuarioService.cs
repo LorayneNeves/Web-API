@@ -9,7 +9,7 @@ namespace Application.Interfaces
 {
     public interface IUsuarioService
     {
-        public Task<string> Autenticar(AutenticarUsuarioViewModel autenticarUsuarioViewModel);
-        public Task Cadastrar(UsuarioViewModel usuario);
+        Task<string> Autenticar(AutenticarUsuarioViewModel autenticarUsuarioViewModel);
+        //Task Cadastrar(UsuarioViewModel usuario);
     }
 }

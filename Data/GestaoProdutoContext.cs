@@ -1,4 +1,5 @@
-﻿using Data.Mappings;
+﻿using Data.EntityFramework.Mappings;
+using Data.Mappings;
 using Domain;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +14,16 @@ namespace Data
 {
     public class GestaoProdutoContext : Microsoft.EntityFrameworkCore.DbContext
     {
-        public GestaoProdutoContext(DbContextOptions<GestaoProdutoContext> options) : base(options) { }
+        public GestaoProdutoContext(DbContextOptions options) : base(options) { }
 
         public Microsoft.EntityFrameworkCore.DbSet<Produto> Produtos { get; set; }
-        public Microsoft.EntityFrameworkCore.DbSet<Usuario> Usuarios { get; set; }       
+        public Microsoft.EntityFrameworkCore.DbSet<Usuario> Usuarios { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+           // modelBuilder.ApplyConfiguration(new ProdutoMap());
+            modelBuilder.ApplyConfiguration(new UsuarioMap());
+        }
     }
+
 }

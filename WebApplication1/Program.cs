@@ -32,7 +32,7 @@ builder.Services.AddSwaggerGen(c =>
         Type = SecuritySchemeType.ApiKey,
         BearerFormat = "JWT",
     });
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement { 
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement {
     {
         new OpenApiSecurityScheme
         {
@@ -44,12 +44,12 @@ builder.Services.AddSwaggerGen(c =>
         },
         new string[]{}
     }
-    }); c.AddSecurityRequirement(new OpenApiSecurityRequirement{ 
+    }); c.AddSecurityRequirement(new OpenApiSecurityRequirement{
     {
-            new OpenApiSecurityScheme 
-            {                
+            new OpenApiSecurityScheme
+            {
                 Reference = new OpenApiReference
-                { 
+                {
                  Type = ReferenceType.SecurityScheme,
                   Id = "Bearer"
                 }
@@ -57,53 +57,54 @@ builder.Services.AddSwaggerGen(c =>
             new string[] {}
         }
     });
+});
 
-builder.Services.Configure<MongoDbSettings>(
-    builder.Configuration.GetSection("MongoDbSettings"));
+    builder.Services.Configure<MongoDbSettings>(
+        builder.Configuration.GetSection("MongoDbSettings"));
 
-builder.Services.AddSingleton<IMongoDbSettings>(serviceProvider =>
-       serviceProvider.GetRequiredService<IOptions<MongoDbSettings>>().Value);
+    builder.Services.AddSingleton<IMongoDbSettings>(serviceProvider =>
+           serviceProvider.GetRequiredService<IOptions<MongoDbSettings>>().Value);
 
-builder.Services.AddAutoMapper(typeof(DomainToApplication), typeof(ApplicationToDomain));
-builder.Services.AddAutoMapper(typeof(DomainToCollection), typeof(CollectionToDomain));
+    builder.Services.AddAutoMapper(typeof(DomainToApplication), typeof(ApplicationToDomain));
+    builder.Services.AddAutoMapper(typeof(DomainToCollection), typeof(CollectionToDomain));
 
-builder.Services.AddScoped(typeof(IMongoRepository<>), typeof(MongoRepository<>));
+    builder.Services.AddScoped(typeof(IMongoRepository<>), typeof(MongoRepository<>));
 
-builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
-builder.Services.AddScoped<IProdutoService, ProdutoService>();
+    builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
+    builder.Services.AddScoped<IProdutoService, ProdutoService>();
 
-builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
-builder.Services.AddScoped<ICategoriaService, CategoriaService>();
+    builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
+    builder.Services.AddScoped<ICategoriaService, CategoriaService>();
 
-builder.Services.AddScoped<IFornecedorRepository, FornecedorRepository>();
-builder.Services.AddScoped<IFornecedorService, FornecedorService>();
-
-
-builder.Services.Configure<Token>(
-    builder.Configuration.GetSection("token"));
+    builder.Services.AddScoped<IFornecedorRepository, FornecedorRepository>();
+    builder.Services.AddScoped<IFornecedorService, FornecedorService>();
 
 
-builder.Services.AddScoped<ITokenService, TokenService>();
+    builder.Services.Configure<Token>(
+        builder.Configuration.GetSection("token"));
 
-builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 
-builder.Services.Configure<EmailConfig>(
-    builder.Configuration.GetSection("EmailConfig"));
+    builder.Services.AddScoped<ITokenService, TokenService>();
 
-var app = builder.Build();
+    builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+    builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    builder.Services.Configure<EmailConfig>(
+        builder.Configuration.GetSection("EmailConfig"));
 
-app.UseHttpsRedirection();
+    var app = builder.Build();
 
-app.UseAuthorization();
+    // Configure the HTTP request pipeline.
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
 
-app.MapControllers();
+    app.UseHttpsRedirection();
 
-app.Run();
+    app.UseAuthorization();
+
+    app.MapControllers();
+
+    app.Run();

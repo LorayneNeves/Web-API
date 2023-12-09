@@ -8,12 +8,12 @@ namespace WebApplication1.Models
         [SwaggerSchema(ReadOnly = true)]
         public Guid Id { get; set; }
 
-        [Required(ErrorMessage = "O campo {0} é obrigatorio")]
-        [StringLength(50, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 8)]
-        public string UserName { get; set; }
-        [Required(ErrorMessage = "O campo {0} é obrigatorio")]
-        [StringLength(50, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 8)]
-        public string Password { get; set; }
+        [Required(ErrorMessage = "O campo {0} é obrigatório.")]
+        public string Login { get; set; }
+
+        [Required(ErrorMessage = "O campo {0} é obrigatório.")]
+        public string Senha { get; set; }
+
         public bool Ativo { get; set; }
     }
 }

@@ -46,10 +46,10 @@ namespace Application.Services
 
         }
 
-        public async Task Cadastrar(UsuarioViewModel usuarioViewModel)
-        {
-            var usuario = _mapper.Map<Usuario>(usuarioViewModel);
-            await _usuarioRepository.Cadastrar(usuario);
-        }
+        //public async Task Cadastrar(UsuarioViewModel usuarioViewModel)
+        //{
+        //    var usuario = _mapper.Map<Usuario>(usuarioViewModel);
+        //    await _usuarioRepository.Cadastrar(usuario);
+        //}
     }
 }
